@@ -78,6 +78,18 @@ class Program
             Console.Write("no journal loaded.\n");
           }
           break;
+        case 3: // load a journal
+          Console.Write("where do you want to load the journal from?\n");
+          string? loadPath = Console.ReadLine();
+          if (string.IsNullOrEmpty(loadPath))
+          {
+            Console.Write("no path entered. please try again.\n");
+            break;
+          }
+          Console.Write("loading journal...\n");
+          currentJournal = new Journal(loadPath);
+          Console.Write("journal loaded.\n");
+          break;
         case 5: // new journal
           Console.Write("creating new journal...\n");
           currentJournal = new Journal();
