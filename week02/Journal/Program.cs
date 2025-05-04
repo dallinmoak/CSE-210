@@ -3,7 +3,7 @@ using static Journal;
 
 class Program
 {
-  static int getMenuChoice(bool loaded = false, string savePath = null, bool firstTime = false)
+  static int getMenuChoice(bool loaded = false, string? savePath = null, bool firstTime = false)
   {
     if (!firstTime)
     {
@@ -28,7 +28,9 @@ class Program
     {
       Console.Write("(no journal loaded)\n");
     }
+    Console.Write("  1. write in current journal\n");
     Console.Write("  2. read current journal\n");
+    Console.Write("  3. load a journal\n");
     Console.Write("  5. new journal\n");
     Console.Write("  6. quit\n");
     Console.Write("Enter your choice: ");
@@ -44,7 +46,7 @@ class Program
   }
   static void Main(string[] args)
   {
-    Journal currentJournal = null;
+    Journal? currentJournal = null;
     int choice = 0;
     Console.Clear();
     Console.Write("Welcome to the Journal program!\n");
@@ -53,7 +55,19 @@ class Program
       choice = getMenuChoice(currentJournal != null, currentJournal?.GetLoadPath(), choice == 0);
       switch (choice)
       {
-        case 2:
+        case 1: // write in current journal
+          if (currentJournal != null)
+          {
+            Console.Write("writing in current journal...\n");
+            currentJournal.AddEntry();
+            Console.Write("entry added.\n");
+          }
+          else
+          {
+            Console.Write("can't do that. no journal loaded.\n");
+          }
+          break;
+        case 2: // read current journal
           if (currentJournal != null)
           {
             Console.Write("reading current journal...\n");
@@ -64,12 +78,12 @@ class Program
             Console.Write("no journal loaded.\n");
           }
           break;
-        case 5:
+        case 5: // new journal
           Console.Write("creating new journal...\n");
           currentJournal = new Journal();
           Console.Write("new journal created.\n");
           break;
-        case 6:
+        case 6: // quit
           Console.WriteLine("buhbye now\n");
           break;
         default:
