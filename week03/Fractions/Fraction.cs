@@ -1,7 +1,7 @@
 class Fraction
 {
-  private int top;
-  private int bottom;
+  private int _top;
+  private int _bottom;
   public Fraction()
   {
     this.Init(1, 1);
@@ -18,19 +18,19 @@ class Fraction
 
   public void Print(bool ForceFraction = false)
   {
-    if (ForceFraction || this.bottom != 1)
+    if (ForceFraction || this._bottom != 1)
     {
-      Console.WriteLine($"{this.top}/{this.bottom}");
+      Console.WriteLine($"{this._top}/{this._bottom}");
     }
     else
     {
-      Console.WriteLine(this.top);
+      Console.WriteLine(this._top);
     }
   }
 
   public void PrintDecimal()
   {
-    Console.WriteLine($"{(double)this.top / (double)this.bottom}");
+    Console.WriteLine($"{(double)this._top / (double)this._bottom}");
   }
 
   private void Init(int top, int bottom)
@@ -41,15 +41,15 @@ class Fraction
 
   public int GetTop()
   {
-    return this.top;
+    return this._top;
   }
   public int GetBottom()
   {
-    return this.bottom;
+    return this._bottom;
   }
   public void SetTop(int top)
   {
-    this.top = top;
+    this._top = top;
   }
   public void SetBottom(int bottom)
   {
@@ -57,6 +57,6 @@ class Fraction
     {
       throw new Exception("Denominator cannot be zero");
     }
-    this.bottom = bottom;
+    this._bottom = bottom;
   }
 }
