@@ -4,7 +4,17 @@ class Order
   private double _subtotal;
   private bool _isDomestic;
   private double _shippingCost;
-  public record Item(Product product, int count);
+  public class Item
+  {
+    public Product product;
+    public int count;
+
+    public Item(Product product, int count)
+    {
+      this.product = product;
+      this.count = count;
+    }
+  }
   private List<Item> _items;
 
   public Order(Customer customer, List<Item> items)
