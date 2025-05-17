@@ -16,7 +16,6 @@ class Reference
   {
     return this._book + " " + this._chapter + ":" + this._startVerse + (this._endVerse.HasValue ? "-" + this._endVerse.Value : "");
   }
-
 }
 
 

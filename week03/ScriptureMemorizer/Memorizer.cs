@@ -3,12 +3,28 @@ class Memorizer
   private Scripture _scripture;
   public void PromptForContentAndRef()
   {
+    Console.Write("Do you want to [E]nter a new scripture or [G]enerate one? (E/g): ");
+    string input = Console.ReadLine();
+    if (input.ToLower() == "g")
+    {
+      string content = "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.";
+      string book = "John";
+      int chapter = 3;
+      int startVerse = 16;
+      int endVerse = 16;
+      Reference reference = new Reference(book, chapter, startVerse, endVerse);
+      this._scripture = new Scripture(content, reference);
+      return;
+    }
     this._scripture = new Scripture();
   }
 
-  public void Display()
+  public void Display(bool clear = true)
   {
-    Console.Clear();
+    if (clear)
+    {
+      Console.Clear();
+    }
     Console.WriteLine(this._scripture.GetDisplayString());
   }
 
@@ -27,34 +43,31 @@ class Memorizer
   public bool Memorize()
   {
     bool gaveUp = false;
+    Console.Clear();
     Console.Write("Ok, get a good look at the scripture.\n");
-    Console.Write("Press Enter when you are ready to start memorizing.\n");
+    this.Display(clear: false);
+    Console.Write("Press Enter to start hiding words: ");
     Console.ReadLine();
     bool allWordsHidden = false;
     while (!allWordsHidden)
     {
+      this._scripture.HideWords();
       allWordsHidden = this._scripture.allWordsHidden;
-      Console.WriteLine($"starting another iteration. All words hidden: {allWordsHidden}");
-      System.Threading.Thread.Sleep(1000);
+      Console.Clear();
+      Console.Write("Ok, get a good look at the scripture.\n");
+      this.Display(clear: false);
       if (allWordsHidden)
       {
+        Console.WriteLine("all words hidden");
         break;
       }
-      Console.Clear();
-      Console.WriteLine(this._scripture.GetDisplayString());
-      Console.Write("Press Enter to hide a word, or type 'quit' to stop memorizing: ");
+      Console.Write("Press Enter to continue or type 'quit' to quit: ");
       string input = Console.ReadLine();
       if (input.ToLower() == "quit")
       {
-        allWordsHidden = true;
-        Console.WriteLine("You gave up.");
+        Console.WriteLine("you gave up");
         gaveUp = true;
         break;
-      }
-      else
-      {
-        Console.WriteLine("some words are still visible.");
-        this._scripture.HideWord();
       }
     }
     return gaveUp;

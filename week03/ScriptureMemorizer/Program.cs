@@ -7,12 +7,13 @@ class Program
     bool done = false;
     while (!done)
     {
+      Console.Clear(); // clear the screen
       Console.Write("ok let's do a scripture\n");
       Memorizer m = new Memorizer();
       m.PromptForContentAndRef(); // prompt for content and reference
       m.Display(); // clear the screen & display
-      bool keepGoing = m.PromptToMemorize(); // prompt to memorize: option to quit and go back to main menu
-      if (keepGoing)
+      bool memorizationPromptStatus = m.PromptToMemorize(); // prompt to memorize: option to quit and go back to main menu
+      if (memorizationPromptStatus)
       {
         bool gaveUp = m.Memorize(); // memorize the scripture, iterate till done
         if (gaveUp)
@@ -30,10 +31,6 @@ class Program
       {
         Console.WriteLine("Goodbye!");
         done = true;
-      }
-      else
-      {
-        continue;
       }
     }
   }
