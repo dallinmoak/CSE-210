@@ -55,5 +55,6 @@ class BreathingActivity : Activity
       _totalBreaths--;
     }
     Console.Clear();
+    base.PostRun();
   }
 }

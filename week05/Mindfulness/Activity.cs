@@ -19,6 +19,15 @@ class Activity
     Console.Write($"inside preRun. duration: {this._duration}\n");
   }
 
+  protected void PostRun()
+  {
+    Console.Clear();
+    Console.Write("good job, you did the activity\n");
+    Console.Write($"time spent: {this._duration} seconds. all done. ");
+    this.Spin(2000);
+    Console.Clear();
+  }
+
   private void DisplayWelcome()
   {
     Console.Write($"Welcome to the {this._type} Activity.\n");
