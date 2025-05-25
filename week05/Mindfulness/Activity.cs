@@ -1,16 +1,23 @@
 class Activity
 {
-  protected void Spin(int mils)
+  protected void Spin(int mils, int frameRate = 100, List<string> spinner = null)
   {
-    List<string> spinner = ["|", "/", "-", "\\"];
-    int frameRate = 100;
+    //default spinner:
+    if (spinner == null)
+    {
+      spinner = new List<string> { "|", "/", "-", "\\" };
+    }
     int frames = mils / frameRate;
     int count = 0;
     while (count < frames)
     {
-      Console.Write(spinner[count % spinner.Count]);
+      string currentSpinner = spinner[count % spinner.Count];
+      Console.Write(currentSpinner);
       Thread.Sleep(frameRate);
-      Console.Write("\b \b");
+      for (int i = 0; i < currentSpinner.Length; i++)
+      {
+        Console.Write("\b \b");
+      }
       count++;
     }
   }
