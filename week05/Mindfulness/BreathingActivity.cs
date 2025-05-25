@@ -43,7 +43,14 @@ class BreathingActivity : Activity
     {
       Breathe("in");
       Console.Write($"hold for {interval} seconds");
-      base.Spin(interval * 1000);
+      // make the spinner do a countdown for holding time, too
+      List<string> holdSpinner = new List<string>();
+      for (int i = interval; i >= 1; i--)
+      {
+        string countDown = i.ToString();
+        holdSpinner.Add(countDown);
+      }
+      base.Spin(interval * 1000, 1000, holdSpinner);
       Console.Write("\n");
       Breathe("out");
       _totalBreaths--;
