@@ -26,7 +26,13 @@ class BreathingActivity : Activity
   private void Breathe(string direction)
   {
     int breathTime = direction == "in" ? _breathInTime : _breathOutTime;
-    Console.Write($"breathe {direction} for {breathTime} seconds");
+    string breathPrompt = $"breathe {direction} for {breathTime} seconds ";
+    if (direction == "hold")
+    {
+      breathPrompt = $"hold for {breathTime} seconds ";
+      breathTime = interval;
+    }
+    Console.Write(breathPrompt);
     List<string> inSpinner = new List<string>();
     for (int i = breathTime; i >= 1; i--)
     {
@@ -34,6 +40,7 @@ class BreathingActivity : Activity
       inSpinner.Add(countDown);
     }
     base.Spin(breathTime * 1000, 1000, inSpinner);
+    Console.Write("0");
     Console.Write("\n");
   }
 
@@ -42,16 +49,7 @@ class BreathingActivity : Activity
     while (_totalBreaths > 0)
     {
       Breathe("in");
-      Console.Write($"hold for {interval} seconds");
-      // make the spinner do a countdown for holding time, too
-      List<string> holdSpinner = new List<string>();
-      for (int i = interval; i >= 1; i--)
-      {
-        string countDown = i.ToString();
-        holdSpinner.Add(countDown);
-      }
-      base.Spin(interval * 1000, 1000, holdSpinner);
-      Console.Write("\n");
+      Breathe("hold");
       Breathe("out");
       _totalBreaths--;
     }
