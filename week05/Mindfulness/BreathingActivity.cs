@@ -1,31 +1,37 @@
 class BreathingActivity : Activity
 {
-  public void Run()
+
+  private int _breathInTime = 4;
+  private int _breathOutTime = 6;
+  private int interval = 2;
+  private int _totalBreaths = 3;
+
+  private void Breathe(string direction)
   {
-    Console.Write("running breathing activity...\n");
-    int breathInTime = 4;
-    Console.Write($"breathe in for {breathInTime} seconds");
+    int breathTime = direction == "in" ? _breathInTime : _breathOutTime;
+    Console.Write($"breathe {direction} for {breathTime} seconds");
     List<string> inSpinner = new List<string>();
-    for (int i = 1; i <= breathInTime; i++)
+    for (int i = 1; i <= breathTime; i++)
     {
       string dots = new string('.', i);
       inSpinner.Add(dots);
     }
-    Console.Write("\n\ninSpinner:");
-    int index = 0;
-    foreach (string dot in inSpinner)
+    base.Spin(breathTime * 1000, 1000, inSpinner);
+    Console.Write("\n");
+  }
+
+  public void Run()
+  {
+    Console.Write("running breathing activity...\n");
+    while (_totalBreaths > 0)
     {
-      Console.Write(dot);
-      index++;
-      if (index < inSpinner.Count)
-      {
-        Console.Write(", ");
-      }
+      Breathe("in");
+      Console.Write($"hold for {interval} seconds");
+      base.Spin(interval * 1000);
+      Console.Write("\n");
+      Breathe("out");
+      _totalBreaths--;
     }
-    Console.Write("\n\n");
-    Console.ReadLine();
-    base.Spin(breathInTime * 1000, 1000, inSpinner);
-    base.Spin(2000);
     Console.Write("breathing activity done");
     Console.Clear();
   }
