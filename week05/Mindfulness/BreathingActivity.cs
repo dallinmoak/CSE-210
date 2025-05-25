@@ -9,8 +9,9 @@ class BreathingActivity : Activity
   public BreathingActivity()
   {
     this._type = "Breathing";
+    this._description = "Breathing is when you go in and out. I'm sure you've heard of it.";
     base.PreRun();
-    // I'm calculating the number of breaths that can be done, rounding up to the nearest breath
+    // I'm calculating the number of breath cycles that can be done, rounding up to the nearest breath
     this.ComputeTotalBreaths();
   }
 

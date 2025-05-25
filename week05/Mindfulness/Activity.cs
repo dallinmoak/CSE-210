@@ -2,6 +2,7 @@ class Activity
 {
 
   protected string _type;
+  protected string _description;
   protected int _duration;
 
   protected void PreRun()
@@ -13,7 +14,7 @@ class Activity
     this.Spin(2000);
     Console.Clear();
     Console.Write("Here we go");
-    Thread.Sleep(500);
+    this.Spin(2000);
     Console.Clear();
     Console.Write($"inside preRun. duration: {this._duration}\n");
   }
@@ -21,6 +22,7 @@ class Activity
   private void DisplayWelcome()
   {
     Console.Write($"Welcome to the {this._type} Activity.\n");
+    Console.Write($"{this._description}\n");
   }
 
   private void GetDuration()
