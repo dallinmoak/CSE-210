@@ -29,7 +29,7 @@ class BreathingActivity : Activity
     string breathPrompt = $"breathe {direction} for {breathTime} seconds ";
     if (direction == "hold")
     {
-      breathPrompt = $"hold for {breathTime} seconds ";
+      breathPrompt = $"hold for {interval} seconds ";
       breathTime = interval;
     }
     Console.Write(breathPrompt);
