@@ -3,7 +3,7 @@ using System;
 class Program
 {
 
-  static bool GetMenuChoice()
+  static bool PrintMenuAndRun()
   {
     bool invalidChoice = true;
     while (invalidChoice)
@@ -20,15 +20,18 @@ class Program
         switch (choiceNum)
         {
           case 1:
-            Console.Write("chose breathing");
+            BreathingActivity br = new BreathingActivity();
+            br.Run();
             invalidChoice = false;
             break;
           case 2:
-            Console.Write("chose reflection");
+            ReflectionActivity re = new ReflectionActivity();
+            re.Run();
             invalidChoice = false;
             break;
           case 3:
-            Console.Write("chose listing");
+            ListingActivity li = new ListingActivity();
+            li.Run();
             invalidChoice = false;
             break;
           case 4:
@@ -53,7 +56,7 @@ class Program
     while (again)
     {
       //if getMenuChoice returns false, the user chose to quit
-      again = GetMenuChoice();
+      again = PrintMenuAndRun();
       // but if it returns true, the user just did an activity
       if (again)
       {
