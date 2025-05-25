@@ -28,10 +28,10 @@ class BreathingActivity : Activity
     int breathTime = direction == "in" ? _breathInTime : _breathOutTime;
     Console.Write($"breathe {direction} for {breathTime} seconds");
     List<string> inSpinner = new List<string>();
-    for (int i = 1; i <= breathTime; i++)
+    for (int i = breathTime; i >= 1; i--)
     {
-      string dots = new string('.', i);
-      inSpinner.Add(dots);
+      string countDown = i.ToString();
+      inSpinner.Add(countDown);
     }
     base.Spin(breathTime * 1000, 1000, inSpinner);
     Console.Write("\n");
