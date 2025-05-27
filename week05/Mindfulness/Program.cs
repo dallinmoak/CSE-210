@@ -52,6 +52,8 @@ class Program
 
   static void Main(string[] args)
   {
+
+    // B. Parish, I went ahead and made some choices with the design and syntax on this one. I also spread out my commits much more so each file has a nice history. I made sure to make all my sample test data be very original, enjoy. PS. sorry, the Listing portion isn't fully functional.
     bool again = true;
     while (again)
     {
