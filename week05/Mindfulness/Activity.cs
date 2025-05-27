@@ -16,7 +16,6 @@ class Activity
     Console.Write("Here we go");
     this.Spin(2000);
     Console.Clear();
-    Console.Write($"inside preRun. duration: {this._duration}\n");
   }
 
   protected void PostRun()
@@ -24,7 +23,7 @@ class Activity
     Console.Clear();
     Console.Write("good job, you did the activity\n");
     Console.Write($"time spent: {this._duration} seconds. all done. ");
-    this.Spin(2000);
+    this.Spin(4000);
     Console.Clear();
   }
 

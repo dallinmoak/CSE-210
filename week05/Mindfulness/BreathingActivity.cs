@@ -18,7 +18,6 @@ class BreathingActivity : Activity
   private void ComputeTotalBreaths()
   {
     int breathTime = _breathInTime + _breathOutTime + interval;
-    Console.Write($"computing total breaths. duration: {this._duration}\n");
     double breathsDouble = (double)this._duration / breathTime;
     int breaths = (int)Math.Ceiling(breathsDouble);
     this._totalBreaths = breaths;
