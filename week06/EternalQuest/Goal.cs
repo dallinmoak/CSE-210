@@ -20,7 +20,7 @@ abstract class Goal
   }
 
   protected abstract void Init();
-  public abstract void ShowActionMenu();
+  public abstract bool ShowActionMenu();
   public abstract void PrintGoalDetails();
 }
 
@@ -35,7 +35,16 @@ class SimpleGoal : Goal
     base._label = input;
   }
 
-  public override void ShowActionMenu() { }
+  public override bool ShowActionMenu()
+  {
+    string choice = "";
+    // TODO: prompt the user for a choice
+    if (choice == "q")
+    {
+      return true; // send close goalset signal
+    }
+    return false;
+  }
 
   public override void PrintGoalDetails() { }
 }

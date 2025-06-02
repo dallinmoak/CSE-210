@@ -18,16 +18,15 @@ class GoalSet
       this.location = location;
       this.goals = new List<Goal>();
       this.totalScore = 0;
-      Console.Write("starting fresh: let's get started with the first goal.\n");
-      this.AddGoal();
-      this._activeGoalIndex = 0;
-      this.ShowMenu();
     }
   }
 
   public void Save() { }
 
-  public void Load(string location) { }
+  public void Load(string location)
+  {
+    // read the contents of a file at location and populate the goals list with the goals found in the file, setting the totalScore accordingly
+  }
 
   public void AddGoal() { }
 
@@ -40,24 +39,23 @@ class GoalSet
     // TODO: print all goals using this.PrintGoalList() and then ask for a number that's an index of the list to interact with
   }
 
-  public void ShowMenu()
+  public bool ShowMenu()
   {
     Console.Clear();
     Console.Write($"currently accessing the goal set at: {this.location}\n");
+    this.PrintGoalList();
+    this.PrintStats();
     if (this._activeGoalIndex == -1)
     {
       // no active goal, prompt to select one
       Console.WriteLine("No active goal. Please select a goal to work on.");
       this.SelectAGoal();
     }
-    else
-    {
-      // show the menu for the active goal
-      Goal activeGoal = this.goals[this._activeGoalIndex];
-      activeGoal.ShowActionMenu();
-      // user will do something with the active goal
-      this.ShowMenu();
-    }
+    // show the menu for the active goal
+    Goal activeGoal = this.goals[this._activeGoalIndex];
+    bool close = activeGoal.ShowActionMenu();
+    // user will do something with the active goal or choose to close this goal set
+    return close;
   }
 
 }
