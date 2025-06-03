@@ -20,7 +20,7 @@ abstract class Goal
   }
 
   protected abstract void Init();
-  public abstract bool ShowActionMenu();
+  public abstract void ShowActionMenu();
   public abstract void PrintGoalDetails();
 }
 
@@ -35,15 +35,27 @@ class SimpleGoal : Goal
     base._label = input;
   }
 
-  public override bool ShowActionMenu()
+  public override void ShowActionMenu()
   {
-    string choice = "";
-    // TODO: prompt the user for a choice
-    if (choice == "q")
+    while (true)
     {
-      return true; // send close goalset signal
+      Console.Write($"interaction with simple goal: {base._label}\n");
+      Console.Write("choose a simple goal action:\n");
+      Console.Write("1. test action\n");
+      Console.Write("q. Quit to goal set menu\n");
+      Console.Write("Please enter your choice: ");
+      string choice = Console.ReadLine();
+      if (choice == "q")
+      {
+        return;
+      }
+      else if (choice == "1")
+      {
+        Console.Write("here's a test action\n");
+        Console.Write("did you finish doing the test action?");
+        Console.ReadLine();
+      }
     }
-    return false;
   }
 
   public override void PrintGoalDetails() { }
