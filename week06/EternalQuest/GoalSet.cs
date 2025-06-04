@@ -28,25 +28,43 @@ class GoalSet
     // read the contents of a file at location and populate the goals list with the goals found in the file, setting the totalScore accordingly
   }
 
-  public void AddGoal()
+  public void AddGoal(string header)
   {
-    Console.Write("Adding a new goal...\n");
+    Console.Clear();
+    if (header != "")
+    {
+      Console.Write($"{header}\n");
+    }
     Goal g = new SimpleGoal();
     this.goals.Add(g);
   }
 
-  public void PrintGoalList(bool detailed = false) { }
-
-  public void PrintStats() { }
-
-  public void SelectAGoal()
+  public void PrintGoalList(bool detailed = false)
   {
-    // TODO: print all goals using this.PrintGoalList() and then ask for a number that's an index of the list to interact with
+    Console.Write("goal list:\n");
+    for (int i = 0; i < this.goals.Count; i++)
+    {
+      Console.Write($" {i}: {this.goals[i].GetLabel()}\n");
+    }
+  }
+
+  public void PrintStats()
+  {
+    Console.Write("stats:\n");
+  }
+
+  public void SelectAGoal(string header = "")
+  {
     bool validInput = false;
     while (!validInput)
     {
-      this.PrintGoalList();
+      Console.Clear();
+      if (header != "")
+      {
+        Console.Write($"{header}\n");
+      }
       Console.Write("Select a goal by its index: ");
+      this.PrintGoalList();
       string input = Console.ReadLine();
       if (int.TryParse(input, out int indexChoice) && indexChoice >= 0 && indexChoice < this.goals.Count)
       {
@@ -60,44 +78,61 @@ class GoalSet
     }
   }
 
-  public bool ShowMenu()
+  public bool ShowMenu(bool r = false)
   {
     Console.Clear();
-    Console.Write("this is the goalset menu for goalset " + this.location + "\n");
-    while (this.goals.Count == 0)
+    if (r)
     {
-      Console.Write("no goals in this goal set. add one? Y/n: ");
-      string input = Console.ReadLine();
-      if (input.ToLower() != "n")
-      {
-        this.AddGoal();
-        // at this point this.goals.Count will be 1 or more, the loop will end
-      }
-      else
-      {
-        Console.Write("nothing to do here, either close or add a goal (A/c): ");
-        input = Console.ReadLine();
-        if (input.ToLower() == "c")
-        {
-          return true;
-        }
-        // else, continue and re-prompt to add a goal
-      }
+      Console.Write("running goalset menu recursively\n");
     }
-    Console.Write($"currently accessing the goal set at: {this.location}\n");
+    Console.Write($"this is the goalset menu for goalset {this.location}\n");
+    if (this.goals.Count == 0)
+    {
+      Console.Write("No goals found. Please add a goal. any key to continue... ");
+      Console.Read();
+      this.AddGoal(header: $"adding a goal for goalset {this.location}");
+      Console.Write("goal added. gon' showMenu again. any key to continue... ");
+      Console.Read();
+      bool result = this.ShowMenu(r: true);
+      return result;
+    }
     this.PrintGoalList();
     this.PrintStats();
+    Console.Write("want to (a)dd a goal, (w)ork on a goal, or (c)lose this goalset? (a/W/c): ");
+    string input = Console.ReadLine();
+    if (input.ToLower() == "a")
+    {
+      this.AddGoal(header: $"adding a goal for goalset {this.location}");
+      bool result = this.ShowMenu(r: true);
+      return result;
+    }
+    else if (input.ToLower() == "c")
+    {
+      Console.Write("**** closing goalset ****\n");
+      Thread.Sleep(1000);
+      return true;
+    }
     if (this._activeGoalIndex == -1)
     {
-      // no active goal, prompt to select one
-      Console.WriteLine("No active goal. Please select a goal to work on.");
-      this.SelectAGoal();
+      Console.WriteLine($"No active goal on goalset {this.location}. Please select a goal to work on. any key to continue...");
+      Console.Read();
+      this.SelectAGoal(header: $"selecting a goal for goalset {this.location}");
+      bool result = this.ShowMenu(r: true);
+      return result;
     }
-    // show the menu for the active goal
-    Goal activeGoal = this.goals[this._activeGoalIndex];
-    activeGoal.ShowActionMenu();
-    // user wis done interacting with the active goal
-    this._activeGoalIndex = -1;
+    Console.Write($"active goal is {this._activeGoalIndex}: {this.goals[_activeGoalIndex].GetLabel()}\n");
+    Console.Write("want to (i)nteract with the active goal or (s)elect a different? (I/d): ");
+    string workOnGoalinput = Console.ReadLine();
+    if (workOnGoalinput.ToLower() == "s")
+    {
+      this.SelectAGoal(header: $"selecting a goal for goalset {this.location}");
+      bool result = this.ShowMenu(r: true);
+      return result;
+    }
+    // Goal activeGoal = this.goals[this._activeGoalIndex];
+    // activeGoal.ShowActionMenu();
+    Console.Write($"fake action menu for the goal @ index {this._activeGoalIndex}. any key to continue...");
+    Console.Read();
     Console.Write("Do you want to continue working on this goal set? (Y/n): ");
     string continueInput = Console.ReadLine();
     return continueInput.ToLower() == "n";

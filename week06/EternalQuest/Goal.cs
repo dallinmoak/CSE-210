@@ -22,6 +22,11 @@ abstract class Goal
   protected abstract void Init();
   public abstract void ShowActionMenu();
   public abstract void PrintGoalDetails();
+
+  public string GetLabel()
+  {
+    return this._label;
+  }
 }
 
 class SimpleGoal : Goal
@@ -37,9 +42,11 @@ class SimpleGoal : Goal
 
   public override void ShowActionMenu()
   {
+    Console.Clear();
+
     while (true)
     {
-      Console.Write($"interaction with simple goal: {base._label}\n");
+      Console.Write($"Goal menu for simple goal: {base._label}\n");
       Console.Write("choose a simple goal action:\n");
       Console.Write("1. test action\n");
       Console.Write("q. Quit to goal set menu\n");
