@@ -47,7 +47,7 @@ class IteratingGoal : Goal
       }
       else
       {
-        Console.Write("1. Complete Iteration\n");
+        Console.Write($"1. Complete Iteration for {this._pointsPerIteration} points\n");
       }
       Console.Write("q. quit to the goalset menu\n");
       Console.Write("Please enter your choice: ");
