@@ -45,47 +45,88 @@ abstract class Goal
   public abstract void ShowActionMenu();
   public abstract void PrintGoalDetails();
 
-  public string GetLabel()
-  {
-    return this._label;
-  }
+  public abstract string GetLabel();
 }
 
 class SimpleGoal : Goal
 {
   public SimpleGoal() : base(GoalType.Simple) { }
+  private int _completionPoints;
+
+  private bool IsComplete()
+  {
+    return this._currentValue >= this._completionPoints;
+  }
 
   protected override void Init()
   {
     Console.Write("what do you wanna call it? ");
     string input = Console.ReadLine();
     base._label = input;
+    Console.Write("how many points do you want it to be worth? ");
+    bool validInput = false;
+    while (!validInput)
+    {
+      string valueInput = Console.ReadLine();
+      if (int.TryParse(valueInput, out int points))
+      {
+        _completionPoints = points;
+        validInput = true;
+      }
+      Console.Write("Invalid input. Please enter a valid number for points: ");
+    }
   }
 
   public override void ShowActionMenu()
   {
+    Console.Clear();
     while (true)
     {
-      Console.Clear();
       Console.Write($"Goal menu for simple goal: {base._label}\n");
+      Console.Write($"Current points: {this._currentValue}/{this._completionPoints}\n");
       Console.Write("choose a simple goal action:\n");
-      Console.Write("1. test action\n");
+      if (this.IsComplete())
+      {
+        Console.Write("x. Can't complete an already completed simple goal\n");
+      }
+      else
+      {
+        Console.Write("1. Complete Goal\n");
+      }
       Console.Write("q. Quit to goal set menu\n");
       Console.Write("Please enter your choice: ");
       string choice = Console.ReadLine();
-      if (choice == "q")
+      switch (choice.ToLower())
       {
-        return;
+        case "1":
+          this.Complete();
+          break;
+        case "q":
+          return;
+        default:
+          Console.WriteLine("Invalid input. Please try again.");
+          break;
       }
-      else if (choice == "1")
-      {
-        Console.Write("here's a test action\n");
-        Console.Write("did you finish doing the test action?");
-        Console.ReadLine();
-      }
+      Console.Clear();
     }
   }
 
+
+  private void Complete()
+  {
+    if (this.IsComplete())
+    {
+      Console.WriteLine($"goal '{base._label}' is already completed");
+    }
+    this._currentValue = this._completionPoints;
+    Console.WriteLine($"goal '{base._label}' completed! Current points: {this._currentValue}/{this._completionPoints}");
+  }
+
   public override void PrintGoalDetails() { }
+
+  public override string GetLabel()
+  {
+    return $"{base._label}{(this.IsComplete() ? " (completed)" : "")} - {this._currentValue}/{this._completionPoints} points";
+  }
 }
 
