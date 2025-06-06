@@ -117,6 +117,7 @@ class SimpleGoal : Goal
     if (this.IsComplete())
     {
       Console.WriteLine($"goal '{base._label}' is already completed");
+      return;
     }
     this._currentValue = this._completionPoints;
     Console.WriteLine($"goal '{base._label}' completed! Current points: {this._currentValue}/{this._completionPoints}");
