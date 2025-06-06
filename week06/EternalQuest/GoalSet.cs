@@ -109,9 +109,7 @@ class GoalSet
     }
     if (this._activeGoalIndex == -1)
     {
-      Console.WriteLine($"No active goal on goalset {this.location}. Please select a goal to work on. any key to continue...");
-      Console.Read();
-      this.SelectAGoal(header: $"selecting a goal for goalset {this.location}");
+      this.SelectAGoal(header: "there isn't an active goal in this set right now. let choose one.");
       bool result = this.ShowMenu(r: true);
       return result;
     }
