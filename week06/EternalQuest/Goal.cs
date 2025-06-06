@@ -6,6 +6,28 @@ public enum GoalType
   Iterating
 }
 
+class GoalMaker
+{
+  private char _type;
+  public GoalMaker()
+  {
+    Console.Write("make a (s)imple goal, (e)ternal goal, or (i)terating goal? (s/e/i): ");
+    _type = Console.ReadLine()[0];
+
+  }
+
+  public Goal Make()
+  {
+    switch (_type)
+    {
+      case 's':
+        return new SimpleGoal();
+      default:
+        return null;
+    }
+  }
+}
+
 abstract class Goal
 {
   public GoalType _type;
@@ -42,10 +64,9 @@ class SimpleGoal : Goal
 
   public override void ShowActionMenu()
   {
-    Console.Clear();
-
     while (true)
     {
+      Console.Clear();
       Console.Write($"Goal menu for simple goal: {base._label}\n");
       Console.Write("choose a simple goal action:\n");
       Console.Write("1. test action\n");

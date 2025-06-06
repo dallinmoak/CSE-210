@@ -30,15 +30,9 @@ class Program
       string location = Console.ReadLine();
       goalSet = new GoalSet(location);
       bool close = false;
-      int iteration = 0;
       while (!close)
       {
-        Console.Write($"entering iteration {iteration}, close signal is set to {close}\n");
-        Thread.Sleep(1000);
         close = goalSet.ShowMenu();
-        Console.Write($"leaving iteration {iteration}, close signal is set to {close}\n");
-        Thread.Sleep(3000);
-        iteration++;
       }
       Console.Write("you've closed the goal set at " + location + "\n");
     }

@@ -35,7 +35,8 @@ class GoalSet
     {
       Console.Write($"{header}\n");
     }
-    Goal g = new SimpleGoal();
+    Goal g = new GoalMaker().Make();
+    // Goal g = new SimpleGoal();
     this.goals.Add(g);
   }
 
@@ -88,11 +89,7 @@ class GoalSet
     Console.Write($"this is the goalset menu for goalset {this.location}\n");
     if (this.goals.Count == 0)
     {
-      Console.Write("No goals found. Please add a goal. any key to continue... ");
-      Console.Read();
-      this.AddGoal(header: $"adding a goal for goalset {this.location}");
-      Console.Write("goal added. gon' showMenu again. any key to continue... ");
-      Console.Read();
+      this.AddGoal(header: $"no goals on goalset {this.location}. let's add a the first one");
       bool result = this.ShowMenu(r: true);
       return result;
     }
@@ -108,8 +105,6 @@ class GoalSet
     }
     else if (input.ToLower() == "c")
     {
-      Console.Write("**** closing goalset ****\n");
-      Thread.Sleep(1000);
       return true;
     }
     if (this._activeGoalIndex == -1)
@@ -121,7 +116,7 @@ class GoalSet
       return result;
     }
     Console.Write($"active goal is {this._activeGoalIndex}: {this.goals[_activeGoalIndex].GetLabel()}\n");
-    Console.Write("want to (i)nteract with the active goal or (s)elect a different? (I/d): ");
+    Console.Write("want to (i)nteract with the active goal or (s)elect a different? (I/s): ");
     string workOnGoalinput = Console.ReadLine();
     if (workOnGoalinput.ToLower() == "s")
     {
@@ -129,10 +124,8 @@ class GoalSet
       bool result = this.ShowMenu(r: true);
       return result;
     }
-    // Goal activeGoal = this.goals[this._activeGoalIndex];
-    // activeGoal.ShowActionMenu();
-    Console.Write($"fake action menu for the goal @ index {this._activeGoalIndex}. any key to continue...");
-    Console.Read();
+    Goal activeGoal = this.goals[this._activeGoalIndex];
+    activeGoal.ShowActionMenu();
     Console.Write("Do you want to continue working on this goal set? (Y/n): ");
     string continueInput = Console.ReadLine();
     return continueInput.ToLower() == "n";
