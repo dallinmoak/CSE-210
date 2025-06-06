@@ -169,7 +169,14 @@ class IteratingGoal : Goal
       Console.Write($"Current points: {this._currentValue}/{this._completionPoints + (this._iterations * this._pointsPerIteration)}\n");
       Console.Write($"Completed iterations: {this._completedIterations}/{this._iterations}\n");
       Console.Write("choose an iterating goal action:\n");
-      Console.Write("1. complete an iteration\n");
+      if (this.IsComplete())
+      {
+        Console.Write("x. Can't complete an already completed iterating goal\n");
+      }
+      else
+      {
+        Console.Write("1. Complete Iteration\n");
+      }
       Console.Write("q. quit to the goalset menu\n");
       Console.Write("Please enter your choice: ");
       string choice = Console.ReadLine();
@@ -196,10 +203,11 @@ class IteratingGoal : Goal
       return;
     }
     this._completedIterations++;
-    string completionMessage = "";
+    string completionMessage;
     this._currentValue += this._pointsPerIteration;
     if (this._completedIterations == this._iterations)
     {
+      this._currentValue += this._completionPoints;
       completionMessage = $"goal '{base._label}' completed {this._completedIterations}/{this._iterations} times for {this._currentValue}/{this._completionPoints + (this._iterations * this._pointsPerIteration)} points";
     }
     else
