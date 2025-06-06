@@ -43,6 +43,23 @@ abstract class Goal
     this.Init();
   }
 
+  protected int getInt(string prompt)
+  {
+    Console.Write(prompt);
+    while (true)
+    {
+      string input = Console.ReadLine();
+      if (int.TryParse(input, out int value))
+      {
+        return value;
+      }
+      else
+      {
+        Console.Write("Invalid input. Please enter a valid number: ");
+      }
+    }
+  }
+
   protected abstract void Init();
   public abstract void ShowActionMenu();
   public abstract string GetLabel();
@@ -63,18 +80,7 @@ class SimpleGoal : Goal
     Console.Write("what do you wanna call it? ");
     string input = Console.ReadLine();
     base._label = input;
-    Console.Write("how many points do you want it to be worth? ");
-    bool validInput = false;
-    while (!validInput)
-    {
-      string valueInput = Console.ReadLine();
-      if (int.TryParse(valueInput, out int points))
-      {
-        _completionPoints = points;
-        validInput = true;
-      }
-      Console.Write("Invalid input. Please enter a valid number for points: ");
-    }
+    this._completionPoints = base.getInt("how many points do you want it to be worth? ");
   }
 
   public override void ShowActionMenu()
@@ -130,11 +136,51 @@ class SimpleGoal : Goal
 
 class IteratingGoal : Goal
 {
+  private int _completionPoints;
+  private int _completedIterations;
+  private int _iterations;
+  private int _pointsPerIteration;
+
   public IteratingGoal() : base(GoalType.Iterating) { }
 
-  protected override void Init() { }
+  protected override void Init()
+  {
+    Console.Write("what to call the iterating goal? ");
+    string input = Console.ReadLine();
+    base._label = input;
+    this._completionPoints = base.getInt("how many points to complete the goal? ");
+    this._iterations = base.getInt("how many iterations to complete the goal? ");
+    this._pointsPerIteration = base.getInt("how many points to add each time you complete it? ");
+  }
 
-  public override void ShowActionMenu() { }
+  public override void ShowActionMenu()
+  {
+    Console.Clear();
+    while (true)
+    {
+      Console.Write($"goal menu for iterating goal {base._label}\n");
+      Console.Write($"Current points: {this._currentValue}/{this._completionPoints + (this._iterations * this._pointsPerIteration)}\n");
+      Console.Write($"Completed iterations: {this._completedIterations}/{this._iterations}\n");
+      Console.Write("choose an iterating goal action:\n");
+      Console.Write("1. test action\n");
+      Console.Write("q. quit to the goalset menu\n");
+      Console.Write("Please enter your choice: ");
+      string choice = Console.ReadLine();
+      switch (choice.ToLower())
+      {
+        case "1":
+          Console.Write("test action selected. ok?\n");
+          Console.ReadLine();
+          break;
+        case "q":
+          return;
+        default:
+          Console.WriteLine("Invalid input. Please try again.");
+          break;
+      }
+      Console.Clear();
+    }
+  }
 
   public override string GetLabel() { return ""; }
 }
