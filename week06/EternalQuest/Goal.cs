@@ -22,6 +22,8 @@ class GoalMaker
     {
       case 's':
         return new SimpleGoal();
+      case 'i':
+        return new IteratingGoal();
       default:
         return null;
     }
@@ -43,8 +45,6 @@ abstract class Goal
 
   protected abstract void Init();
   public abstract void ShowActionMenu();
-  public abstract void PrintGoalDetails();
-
   public abstract string GetLabel();
 }
 
@@ -111,7 +111,6 @@ class SimpleGoal : Goal
     }
   }
 
-
   private void Complete()
   {
     if (this.IsComplete())
@@ -123,11 +122,19 @@ class SimpleGoal : Goal
     Console.WriteLine($"goal '{base._label}' completed! Current points: {this._currentValue}/{this._completionPoints}");
   }
 
-  public override void PrintGoalDetails() { }
-
   public override string GetLabel()
   {
     return $"{base._label}{(this.IsComplete() ? " (completed)" : "")} - {this._currentValue}/{this._completionPoints} points";
   }
 }
 
+class IteratingGoal : Goal
+{
+  public IteratingGoal() : base(GoalType.Iterating) { }
+
+  protected override void Init() { }
+
+  public override void ShowActionMenu() { }
+
+  public override string GetLabel() { return ""; }
+}
