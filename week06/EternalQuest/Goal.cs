@@ -182,5 +182,9 @@ class IteratingGoal : Goal
     }
   }
 
-  public override string GetLabel() { return ""; }
+  public override string GetLabel()
+  {
+    string completedClause = this._completedIterations >= this._iterations ? " (completed)" : $"({this._completedIterations}/{this._iterations} rounds done)";
+    return $"{base._label} - ({this._currentValue}/{this._completionPoints + (this._iterations * this._pointsPerIteration)} points); {completedClause}";
+  }
 }
