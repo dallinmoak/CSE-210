@@ -126,6 +126,8 @@ class SimpleGoal : Goal
     }
     this._currentValue = this._completionPoints;
     Console.WriteLine($"goal '{base._label}' completed! Current points: {this._currentValue}/{this._completionPoints}");
+    Console.WriteLine("\n press any key to continue");
+    Console.ReadKey();
   }
 
   public override string GetLabel()
@@ -142,6 +144,11 @@ class IteratingGoal : Goal
   private int _pointsPerIteration;
 
   public IteratingGoal() : base(GoalType.Iterating) { }
+
+  private bool IsComplete()
+  {
+    return this._completedIterations >= this._iterations;
+  }
 
   protected override void Init()
   {
@@ -162,15 +169,14 @@ class IteratingGoal : Goal
       Console.Write($"Current points: {this._currentValue}/{this._completionPoints + (this._iterations * this._pointsPerIteration)}\n");
       Console.Write($"Completed iterations: {this._completedIterations}/{this._iterations}\n");
       Console.Write("choose an iterating goal action:\n");
-      Console.Write("1. test action\n");
+      Console.Write("1. complete an iteration\n");
       Console.Write("q. quit to the goalset menu\n");
       Console.Write("Please enter your choice: ");
       string choice = Console.ReadLine();
       switch (choice.ToLower())
       {
         case "1":
-          Console.Write("test action selected. ok?\n");
-          Console.ReadLine();
+          this.CompleteIteration();
           break;
         case "q":
           return;
@@ -180,6 +186,28 @@ class IteratingGoal : Goal
       }
       Console.Clear();
     }
+  }
+
+  private void CompleteIteration()
+  {
+    if (this.IsComplete())
+    {
+      Console.WriteLine($"goal '{base._label}' is already completed");
+      return;
+    }
+    this._completedIterations++;
+    string completionMessage = "";
+    this._currentValue += this._pointsPerIteration;
+    if (this._completedIterations == this._iterations)
+    {
+      completionMessage = $"goal '{base._label}' completed {this._completedIterations}/{this._iterations} times for {this._currentValue}/{this._completionPoints + (this._iterations * this._pointsPerIteration)} points";
+    }
+    else
+    {
+      completionMessage = $"goal '{base._label}' completed iteration {this._completedIterations}/{this._iterations}! Current points: {this._currentValue}/{this._completionPoints + (this._iterations * this._pointsPerIteration)}";
+    }
+    Console.WriteLine(completionMessage + "\n press any key to continue");
+    Console.ReadKey();
   }
 
   public override string GetLabel()
