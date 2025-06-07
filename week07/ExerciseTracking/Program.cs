@@ -10,6 +10,8 @@ class Program
 
     //just to show that the pace isn't hardcoded, I added a 4 minute mile run
 
+    // See the Run, Bike, and Swim classes to see how distance information is overridden to give relevant data.
+
     Console.Write("creating an activity tracker that has a 4km run of 15 minutes, a 400m swim of 8 minutes, and a 14km bike ride of 33 minutes, 36 seconds, where the printed unit is km and the owner is Dallin Moak.....\n");
     ActivityTracker t1 = new ActivityTracker(
       ownerName: "Dallin Moak",
