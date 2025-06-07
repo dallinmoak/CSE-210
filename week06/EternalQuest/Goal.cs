@@ -22,6 +22,8 @@ class GoalMaker
     {
       case 's':
         return new SimpleGoal();
+      case 'e':
+        return new EternalGoal();
       case 'i':
         return new IteratingGoal();
       default:

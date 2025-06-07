@@ -12,11 +12,6 @@ class EternalGoal : Goal
 
   private int _completionPoints;
 
-  private bool IsComplete()
-  {
-    return this._currentValue >= this._completionPoints;
-  }
-
   protected override void Init()
   {
     Console.Write("what do you wanna call it? ");
@@ -30,9 +25,9 @@ class EternalGoal : Goal
     Console.Clear();
     while (true)
     {
-      Console.Write($"Goal menu for simple goal: {base._label}\n");
+      Console.Write($"Goal menu for eternal goal: {base._label}\n");
       Console.Write($"Current points: {this._currentValue}/{this._completionPoints}\n");
-      Console.Write("choose a simple goal action:\n");
+      Console.Write("choose a eternal goal action:\n");
       Console.Write("1. work on Goal\n");
       Console.Write("q. Quit to goal set menu\n");
       Console.Write("Please enter your choice: ");
