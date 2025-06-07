@@ -58,15 +58,17 @@ abstract class ActivityBase
     return $"{unitDuration:F2}/{preferredUnit}. Speed: {unitSpeed:F2} {preferredUnit}/h";
   }
 
-  protected string getDistance(string preferredUnit = "km")
+  protected double GetDistanceBasic(string preferredUnit = "km")
   {
     double unitDistance = this._distance;
     if (preferredUnit == "mi")
     {
       unitDistance *= _mileToKilometer;
     }
-    return $"{unitDistance:F2} {preferredUnit}";
+    return unitDistance;
   }
+
+  protected abstract double GetDistance(string preferredUnit);
 
   public abstract string GetSummary(string preferredUnit);
 }
