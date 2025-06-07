@@ -26,6 +26,31 @@ class GoalSet
   public void Load(string location)
   {
     // read the contents of a file at location and populate the goals list with the goals found in the file, setting the totalScore accordingly
+    string[] lines = File.ReadAllLines(location);
+    char delimiter = '~';
+    this.location = lines[0].Trim();
+    string[] goalsRaw = [.. lines.Skip(1)];
+    foreach (string goalRaw in goalsRaw)
+    {
+      string[] parts = goalRaw.Trim().Split(delimiter);
+      string goalType = parts[0].Trim();
+      string label = parts[1].Trim();
+      int currentValue = int.Parse(parts[2].Trim());
+      if (goalType == "SimpleGoal")
+      {
+        int completionPoints = int.Parse(parts[3].Trim());
+        // todo: define a simple goal constructor using labe, currentValue, and completionPoints
+      }
+      else if (goalType == "IteratingGoal")
+      {
+        int completionPoints = int.Parse(parts[3].Trim());
+        int completedIterations = int.Parse(parts[4].Trim());
+        int iterations = int.Parse(parts[5].Trim());
+        int pointsPerIteration = int.Parse(parts[6].Trim());
+        // TODO: interatingGoal constructor by params
+      }
+    }
+
   }
 
   public void AddGoal(string header)
