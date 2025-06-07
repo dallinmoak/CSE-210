@@ -5,11 +5,13 @@ class Run : ActivityBase
   public override string GetSummary(string preferredUnit)
   {
     string typeClause = $"Type: {_type}, ";
-    string distanceClause = $"Distance: {_distance} {preferredUnit}, ";
-    string durationClause = $"Duration: {base.getDuration()}";
+    string distanceClause = $"Distance: {base.getDistance(preferredUnit)}, ";
+    string durationClause = $"Duration: {base.getDuration()}, ";
+    string paceClause = $"Pace: {base.getPace(preferredUnit)}";
     return "run summary: " +
            typeClause +
            distanceClause +
-           durationClause;
+           durationClause +
+           paceClause;
   }
 }

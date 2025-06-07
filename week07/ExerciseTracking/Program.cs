@@ -44,5 +44,8 @@ class Program
       }
     );
     t1.PrintSummary();
+    t1.SetPreferredUnit("mi");
+    Console.Write("changing the preferred unit to mi and printing the summary again...\n");
+    t1.PrintSummary();
   }
 }

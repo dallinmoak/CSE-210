@@ -4,9 +4,27 @@ abstract class ActivityBase
   protected double _distance;
   protected int _duration;
 
-  protected string getDuration()
+  static private double _mileToKilometer = 0.621371;
+
+  public ActivityBase(string type, double distance, int duration)
   {
-    TimeSpan interval = TimeSpan.FromMilliseconds(_duration);
+    this._type = type;
+    this._distance = distance;
+    this._duration = duration;
+  }
+
+  protected string getDuration(TimeSpan sp = new TimeSpan())
+  {
+    TimeSpan interval;
+    // an empty TimeSpan param assumes the method should use the activity duration
+    if (sp == new TimeSpan())
+    {
+      interval = TimeSpan.FromMilliseconds(_duration);
+    }
+    else
+    {
+      interval = sp;
+    }
     string hoursRaw = $"{(int)interval.TotalHours:D2}";
     string hours = hoursRaw == "00" ? "" : $"{hoursRaw}:";
     string minutesRaw = $"{interval.Minutes:D2}";
@@ -26,12 +44,30 @@ abstract class ActivityBase
     return $"{hours}{minutes}{interval.Seconds:D2} (hh:mm:ss)";
   }
 
-  public ActivityBase(string type, double distance, int duration)
+  protected String getPace(string preferredUnit = "km")
   {
-    this._type = type;
-    this._distance = distance;
-    this._duration = duration;
+    double unitDistance = this._distance;
+    if (preferredUnit == "mi")
+    {
+      unitDistance *= _mileToKilometer;
+    }
+    double unitPace = (double)this._duration / unitDistance;
+    TimeSpan interval = TimeSpan.FromMilliseconds(unitPace);
+    string unitDuration = getDuration(interval);
+    double unitSpeed = 3600000 / unitPace;
+    return $"{unitDuration:F2}/{preferredUnit}. Speed: {unitSpeed:F2} {preferredUnit}/h";
   }
+
+  protected string getDistance(string preferredUnit = "km")
+  {
+    double unitDistance = this._distance;
+    if (preferredUnit == "mi")
+    {
+      unitDistance *= _mileToKilometer;
+    }
+    return $"{unitDistance:F2} {preferredUnit}";
+  }
+
   public abstract string GetSummary(string preferredUnit);
 }
 

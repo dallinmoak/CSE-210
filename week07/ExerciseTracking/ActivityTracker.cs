@@ -20,4 +20,9 @@ class ActivityTracker
       Console.WriteLine(activity.GetSummary(_preferredUnit));
     }
   }
+
+  public void SetPreferredUnit(string preferredUnit)
+  {
+    this._preferredUnit = preferredUnit;
+  }
 }
