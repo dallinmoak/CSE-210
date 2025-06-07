@@ -8,6 +8,8 @@ class Program
     // This is the plan: I make an activity tracker that creates 3 activites of type run, swim, and bike, with their respective distances and durations.
     // each of the child class defs for Activity (Run, Swim and Bike) will implement their own version of a GetSummary method that will return a summary relevant to that activity give the values of distance and duration provided, the type of activity, and the tracker's preferred unit of measurement.
 
+    //just to show that the pace isn't hardcoded, I added a 4 minute mile run
+
     Console.Write("creating an activity tracker that has a 4km run of 15 minutes, a 400m swim of 8 minutes, and a 14km bike ride of 33 minutes, 36 seconds, where the printed unit is km and the owner is Dallin Moak.....\n");
     ActivityTracker t1 = new ActivityTracker(
       ownerName: "Dallin Moak",
@@ -32,6 +34,12 @@ class Program
           type: "bike",
           distance: 14.0,
           duration: 2016000
+        ),
+        // 4 minute mile
+        new Activity(
+          type: "run",
+          distance: 1.609344,
+          duration: 240000
         )
       }
     );
