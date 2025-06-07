@@ -46,6 +46,16 @@ class GoalSet
         );
         this.goals.Add(g);
       }
+      else if (goalType == "EternalGoal")
+      {
+        int completionPoints = int.Parse(parts[3].Trim());
+        Goal g = new EternalGoal(
+          label,
+          currentValue,
+          completionPoints
+        );
+        this.goals.Add(g);
+      }
       else if (goalType == "IteratingGoal")
       {
         int completionPoints = int.Parse(parts[3].Trim());
