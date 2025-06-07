@@ -4,6 +4,28 @@ abstract class ActivityBase
   protected double _distance;
   protected int _duration;
 
+  protected string getDuration()
+  {
+    TimeSpan interval = TimeSpan.FromMilliseconds(_duration);
+    string hoursRaw = $"{(int)interval.TotalHours:D2}";
+    string hours = hoursRaw == "00" ? "" : $"{hoursRaw}:";
+    string minutesRaw = $"{interval.Minutes:D2}";
+    string minutes = minutesRaw == "00" ? "" : $"{minutesRaw}:";
+    if (interval.Hours == 0 && interval.Minutes == 0)
+    {
+      return $"{interval.Seconds:D2} s";
+    }
+    else if (interval.Hours == 0)
+    {
+      return $"{minutes}{interval.Seconds:D2} (mm:ss)";
+    }
+    else if (interval.Minutes == 0)
+    {
+      return $"{hours}{interval.Seconds:D2} (hh:ss)";
+    }
+    return $"{hours}{minutes}{interval.Seconds:D2} (hh:mm:ss)";
+  }
+
   public ActivityBase(string type, double distance, int duration)
   {
     this._type = type;

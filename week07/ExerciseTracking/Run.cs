@@ -6,7 +6,7 @@ class Run : ActivityBase
   {
     string typeClause = $"Type: {_type}, ";
     string distanceClause = $"Distance: {_distance} {preferredUnit}, ";
-    string durationClause = $"Duration: {_duration} ";
+    string durationClause = $"Duration: {base.getDuration()}";
     return "run summary: " +
            typeClause +
            distanceClause +
