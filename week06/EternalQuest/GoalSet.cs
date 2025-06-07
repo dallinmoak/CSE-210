@@ -52,7 +52,15 @@ class GoalSet
         int completedIterations = int.Parse(parts[4].Trim());
         int iterations = int.Parse(parts[5].Trim());
         int pointsPerIteration = int.Parse(parts[6].Trim());
-        // TODO: interatingGoal constructor by params
+        Goal g = new IteratingGoal(
+          label,
+          currentValue,
+          completionPoints,
+          completedIterations,
+          iterations,
+          pointsPerIteration
+        );
+        this.goals.Add(g);
       }
     }
 

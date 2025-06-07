@@ -7,6 +7,17 @@ class IteratingGoal : Goal
 
   public IteratingGoal() : base(GoalType.Iterating) { }
 
+  public IteratingGoal(string label, int currentValue, int completionPoints, int completedIterations, int iterations, int pointsPerIteration)
+    : base(GoalType.Iterating, fromSource: true)
+  {
+    this._label = label;
+    this._currentValue = currentValue;
+    this._completionPoints = completionPoints;
+    this._completedIterations = completedIterations;
+    this._iterations = iterations;
+    this._pointsPerIteration = pointsPerIteration;
+  }
+
   private bool IsComplete()
   {
     return this._completedIterations >= this._iterations;
