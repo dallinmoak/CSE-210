@@ -4,6 +4,12 @@ class Run : ActivityBase
 
   public override string GetSummary(string preferredUnit)
   {
-    return "run summary";
+    string typeClause = $"Type: {_type}, ";
+    string distanceClause = $"Distance: {_distance} {preferredUnit}, ";
+    string durationClause = $"Duration: {_duration} ";
+    return "run summary: " +
+           typeClause +
+           distanceClause +
+           durationClause;
   }
 }

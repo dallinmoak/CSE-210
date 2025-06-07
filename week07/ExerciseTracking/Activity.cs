@@ -1,6 +1,15 @@
 abstract class ActivityBase
 {
-  public ActivityBase(string type, double distance, int duration) { }
+  protected string _type;
+  protected double _distance;
+  protected int _duration;
+
+  public ActivityBase(string type, double distance, int duration)
+  {
+    this._type = type;
+    this._distance = distance;
+    this._duration = duration;
+  }
   public abstract string GetSummary(string preferredUnit);
 }
 
