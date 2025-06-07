@@ -1,7 +1,15 @@
 
 class SimpleGoal : Goal
 {
-  public SimpleGoal() : base(GoalType.Simple) { }
+  public SimpleGoal() : base(GoalType.Simple, fromSource: false) { }
+
+  public SimpleGoal(string label, int currentValue, int completionPoints) : base(GoalType.Simple, fromSource: true)
+  {
+    this._label = label;
+    this._currentValue = currentValue;
+    this._completionPoints = completionPoints;
+  }
+
   private int _completionPoints;
 
   private bool IsComplete()

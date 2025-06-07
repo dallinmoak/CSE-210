@@ -39,7 +39,12 @@ class GoalSet
       if (goalType == "SimpleGoal")
       {
         int completionPoints = int.Parse(parts[3].Trim());
-        // todo: define a simple goal constructor using labe, currentValue, and completionPoints
+        Goal g = new SimpleGoal(
+          label,
+          currentValue,
+          completionPoints
+        );
+        this.goals.Add(g);
       }
       else if (goalType == "IteratingGoal")
       {
@@ -61,7 +66,6 @@ class GoalSet
       Console.Write($"{header}\n");
     }
     Goal g = new GoalMaker().Make();
-    // Goal g = new SimpleGoal();
     this.goals.Add(g);
   }
 

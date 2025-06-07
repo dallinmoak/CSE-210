@@ -36,11 +36,14 @@ abstract class Goal
   protected string _label;
   protected int _currentValue;
 
-  public Goal(GoalType type)
+  public Goal(GoalType type, bool fromSource = false)
   {
     this._type = type;
     this._currentValue = 0;
-    this.Init();
+    if (!fromSource)
+    {
+      this.Init();
+    }
   }
 
   protected int getInt(string prompt)
