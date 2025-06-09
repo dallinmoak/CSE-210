@@ -9,14 +9,15 @@ class GoalSet
 
   public GoalSet(string location)
   {
+    this.location = location;
     bool foundIt = File.Exists(location);
     if (foundIt)
     {
       this.Load(location);
+      this.UpdateTotalScore();
     }
     else
     {
-      this.location = location;
       this.goals = new List<Goal>();
       this.totalScore = 0;
     }
@@ -46,6 +47,7 @@ class GoalSet
     Goal g = null;
     foreach (string goalRaw in goalsRaw)
     {
+      Console.WriteLine($"loading goal: {goalRaw}");
       string[] parts = goalRaw.Trim().Split(delimiter);
       string goalType = parts[0].Trim();
       string label = parts[1].Trim();
@@ -110,7 +112,18 @@ class GoalSet
 
   public void PrintStats()
   {
+    this.UpdateTotalScore();
     Console.Write("stats:\n");
+    Console.Write($" total score: {this.totalScore}\n");
+  }
+
+  private void UpdateTotalScore()
+  {
+    this.totalScore = 0;
+    foreach (Goal g in this.goals)
+    {
+      this.totalScore += g.getCurrentScore();
+    }
   }
 
   public void SelectAGoal(string header = "")
@@ -191,9 +204,29 @@ class GoalSet
     }
     Goal activeGoal = this.goals[this._activeGoalIndex];
     activeGoal.ShowActionMenu();
+    this.UpdateTotalScore();
     Console.Write("Do you want to continue working on this goal set? (Y/n): ");
     string continueInput = Console.ReadLine();
-    return continueInput.ToLower() == "n";
+    if (continueInput.ToLower() == "n")
+    {
+      Console.Write("wanna save? (Y/n): ");
+      string saveInput = Console.ReadLine();
+      if (saveInput.ToLower() != "n")
+      {
+        this.Save();
+        Console.Write("goalset saved.\n");
+      }
+      else
+      {
+        Console.Write("goalset not saved.\n");
+      }
+      Thread.Sleep(1000);
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
 }

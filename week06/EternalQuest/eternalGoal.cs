@@ -62,8 +62,9 @@ class EternalGoal : Goal
 
   public override string GoalToString(string delimiter = "~")
   {
-    return $"IteratingGoal{delimiter}" +
+    return $"EternalGoal{delimiter}" +
     $"{base._label}{delimiter}" +
-    $"{this._currentValue}{delimiter}";
+    $"{this._currentValue}{delimiter}" +
+    $"{this._completionPoints}";
   }
 }

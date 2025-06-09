@@ -67,6 +67,11 @@ abstract class Goal
     }
   }
 
+  public int getCurrentScore()
+  {
+    return this._currentValue;
+  }
+
   protected abstract void Init();
   public abstract void ShowActionMenu();
   public abstract string GetLabel();
