@@ -4,7 +4,7 @@ class Program
 {
   static void Main(string[] args)
   {
-    // Hi B. Parish, Here's my program for the goal manager. I didn't quite get around to implementing the saving feature, but the loading feature, while not usable, is fleshed out and theoretically works.
+    // Hi B. Parish, Here's my program for the goal manager. Saving and loading works, there's a test file called 'test.txt' in the root of the project.
 
     // I feel my flow control design shows extra creativity, including the way a user can functionally navigate between 3 different types of menus, and the use of a GoalMaker class for single-point access to user-driven goal creation.
     // also of merit is my use of overloads and alternate contructors to allow for either user driven or file-driven goal creation.
