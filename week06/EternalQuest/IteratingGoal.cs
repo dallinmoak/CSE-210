@@ -111,4 +111,15 @@ class IteratingGoal : Goal
     string pointsClause = this.PointBreakdown();
     return $"{base._label} - ({pointsClause} points); {completedClause}";
   }
+
+  public override string GoalToString(string delimiter = "~")
+  {
+    return $"IteratingGoal{delimiter}" +
+    $"{base._label}{delimiter}" +
+    $"{this._currentValue}{delimiter}" +
+    $"{this._completionPoints}{delimiter}" +
+    $"{this._completedIterations}{delimiter}" +
+    $"{this._iterations}{delimiter}" +
+    $"{this._pointsPerIteration}";
+  }
 }

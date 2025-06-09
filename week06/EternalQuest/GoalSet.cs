@@ -1,3 +1,5 @@
+using System.IO;
+
 class GoalSet
 {
   public string location;
@@ -7,8 +9,7 @@ class GoalSet
 
   public GoalSet(string location)
   {
-    // TODO: attempt to load at location, if no file, create new
-    bool foundIt = false;
+    bool foundIt = File.Exists(location);
     if (foundIt)
     {
       this.Load(location);
@@ -21,7 +22,18 @@ class GoalSet
     }
   }
 
-  public void Save() { }
+  public void Save()
+  {
+    using (StreamWriter outFile = new StreamWriter(this.location))
+    {
+      outFile.WriteLine(this.location);
+      foreach (Goal g in this.goals)
+      {
+
+        outFile.WriteLine(g.GoalToString());
+      }
+    }
+  }
 
   public void Load(string location)
   {
@@ -30,6 +42,8 @@ class GoalSet
     char delimiter = '~';
     this.location = lines[0].Trim();
     string[] goalsRaw = [.. lines.Skip(1)];
+    this.goals = new List<Goal>();
+    Goal g = null;
     foreach (string goalRaw in goalsRaw)
     {
       string[] parts = goalRaw.Trim().Split(delimiter);
@@ -39,22 +53,20 @@ class GoalSet
       if (goalType == "SimpleGoal")
       {
         int completionPoints = int.Parse(parts[3].Trim());
-        Goal g = new SimpleGoal(
-          label,
-          currentValue,
-          completionPoints
-        );
-        this.goals.Add(g);
+        g = new SimpleGoal(
+         label,
+         currentValue,
+         completionPoints
+       );
       }
       else if (goalType == "EternalGoal")
       {
         int completionPoints = int.Parse(parts[3].Trim());
-        Goal g = new EternalGoal(
-          label,
-          currentValue,
-          completionPoints
-        );
-        this.goals.Add(g);
+        g = new EternalGoal(
+         label,
+         currentValue,
+         completionPoints
+       );
       }
       else if (goalType == "IteratingGoal")
       {
@@ -62,16 +74,16 @@ class GoalSet
         int completedIterations = int.Parse(parts[4].Trim());
         int iterations = int.Parse(parts[5].Trim());
         int pointsPerIteration = int.Parse(parts[6].Trim());
-        Goal g = new IteratingGoal(
-          label,
-          currentValue,
-          completionPoints,
-          completedIterations,
-          iterations,
-          pointsPerIteration
-        );
-        this.goals.Add(g);
+        g = new IteratingGoal(
+         label,
+         currentValue,
+         completionPoints,
+         completedIterations,
+         iterations,
+         pointsPerIteration
+       );
       }
+      this.goals.Add(g);
     }
 
   }
@@ -129,10 +141,6 @@ class GoalSet
   public bool ShowMenu(bool r = false)
   {
     Console.Clear();
-    if (r)
-    {
-      Console.Write("running goalset menu recursively\n");
-    }
     Console.Write($"this is the goalset menu for goalset {this.location}\n");
     if (this.goals.Count == 0)
     {
@@ -152,6 +160,18 @@ class GoalSet
     }
     else if (input.ToLower() == "c")
     {
+      Console.Write("wanna save? (Y/n): ");
+      string saveInput = Console.ReadLine();
+      if (saveInput.ToLower() != "n")
+      {
+        this.Save();
+        Console.Write("goalset saved.\n");
+      }
+      else
+      {
+        Console.Write("goalset not saved.\n");
+      }
+      Thread.Sleep(1000);
       return true;
     }
     if (this._activeGoalIndex == -1)

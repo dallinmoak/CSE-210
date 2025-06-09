@@ -59,4 +59,11 @@ class EternalGoal : Goal
   {
     return $"{base._label} - {this._currentValue}/infinity points";
   }
+
+  public override string GoalToString(string delimiter = "~")
+  {
+    return $"IteratingGoal{delimiter}" +
+    $"{base._label}{delimiter}" +
+    $"{this._currentValue}{delimiter}";
+  }
 }

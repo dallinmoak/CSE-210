@@ -1,0 +1,2 @@
+test.txt
+SimpleGoal~goal1~0~12

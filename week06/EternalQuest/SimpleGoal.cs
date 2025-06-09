@@ -76,4 +76,12 @@ class SimpleGoal : Goal
   {
     return $"{base._label}{(this.IsComplete() ? " (completed)" : "")} - {this._currentValue}/{this._completionPoints} points";
   }
+
+  public override string GoalToString(string delimiter = "~")
+  {
+    return $"SimpleGoal{delimiter}" +
+    $"{base._label}{delimiter}" +
+    $"{this._currentValue}{delimiter}" +
+    $"{this._completionPoints}";
+  }
 }

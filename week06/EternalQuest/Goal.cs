@@ -48,6 +48,8 @@ abstract class Goal
     }
   }
 
+  public abstract string GoalToString(string delimiter = "~");
+
   protected int getInt(string prompt)
   {
     Console.Write(prompt);
